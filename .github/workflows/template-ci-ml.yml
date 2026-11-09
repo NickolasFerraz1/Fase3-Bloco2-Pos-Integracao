@@ -12,6 +12,11 @@ on:
         required: true
         default: "tests/"
         type: string
+      working-directory:
+        description: "Pasta do projeto (onde fica o pyproject.toml)"
+        required: false
+        default: "."
+        type: string
     secrets:
       TOKEN_GITHUB:
         description: "Token do GitHub"
