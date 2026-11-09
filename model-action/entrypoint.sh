@@ -1,3 +1,4 @@
+#!/bin/bash
 CAMINHO=$1
 NIVEL=$2
 
