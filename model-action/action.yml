@@ -1,0 +1,19 @@
+name: 'Auditoria de MLOps'
+description: "roda testes complexos de compliance, assina o modelo"
+author: "Nickolas Ferraz"
+
+inputs:
+  path-model:
+    description: "Caminho para o modelo"
+    required: true
+    default: "modelo.pkl"
+  nivel-alerta:
+    description: "Nível de alerta para falhas"
+    required: true
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.path-model }}
+    - ${{ inputs.nivel-alerta }}
