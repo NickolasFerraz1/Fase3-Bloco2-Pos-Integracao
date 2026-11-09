@@ -1,0 +1,48 @@
+name: CI - TEMPLATE
+
+on:
+  workflow_call:
+    inputs:
+      PYTHON_VERSION:
+        description: "Versão usada para instalação do Python"
+        required: false
+        type: string
+      path-tests:
+        description: "Caminho para os testes"
+        required: true
+        default: "tests/"
+        type: string
+    secrets:
+      GITHUB_TOKEN:
+        description: "Token do GitHub"
+        required: true
+
+jobs:
+  validacao-ambiente:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ inputs.PYTHON_VERSION }}
+          cache: "poetry"
+    
+      - name: Install Ruff (Linter)
+        run: pip install ruff
+        
+      - name: Run Linter
+        run: ruff check .
+
+      - name: Install Dependencies
+        run: poetry install
+    
+      - name: Run Tests
+        run: poetry run python -m pytest ${{ inputs.path-tests }} -v
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
