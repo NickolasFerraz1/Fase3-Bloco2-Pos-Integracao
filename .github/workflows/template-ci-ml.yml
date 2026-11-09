@@ -13,7 +13,7 @@ on:
         default: "tests/"
         type: string
     secrets:
-      GITHUB_TOKEN:
+      TOKEN_GITHUB:
         description: "Token do GitHub"
         required: true
 
@@ -30,7 +30,7 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v6
         with:
-          python-version: ${{ inputs.PYTHON_VERSION }}
+          PYTHON_VERSION: ${{ inputs.PYTHON_VERSION }}
           cache: "poetry"
     
       - name: Install Ruff (Linter)
@@ -45,4 +45,4 @@ jobs:
       - name: Run Tests
         run: poetry run python -m pytest ${{ inputs.path-tests }} -v
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
