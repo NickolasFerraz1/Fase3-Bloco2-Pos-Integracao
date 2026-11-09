@@ -25,6 +25,9 @@ on:
 jobs:
   validacao-ambiente:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -35,8 +38,9 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v6
         with:
-          PYTHON_VERSION: ${{ inputs.PYTHON_VERSION }}
+          python-version: ${{ inputs.PYTHON_VERSION }}
           cache: "poetry"
+          cache-dependency-path: ${{ inputs.working-directory }}/poetry.lock
     
       - name: Install Ruff (Linter)
         run: pip install ruff
